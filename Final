@@ -1,1 +1,145 @@
+#The game that I chose to make was tic tac toe
+#Final project for CSCI110
+#Written by - Jackson Pierce
 
+import random
+
+print("Welcome to my Tic Tac Toe game, I hope you enjoy!!")
+print("==================================================")
+
+# GameBoard = 
+    #["1", "2", "3"],  #creates the board we will play tictactoe on 
+    #["4", "5", "6"],  #There are 3 columns and 3 rows that make up our game board
+    #["7", "8", "9"]
+
+
+TacGrid = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+GB = [[1,2,3], [4,5,6], [7,8,9]]
+
+VertRow = 3
+HorizRow = 3
+
+def printGB():
+  for x in range(VertRow):
+    print("\n+---+---+---+")
+    print("|", end="")
+    for y in range(HorizRow):
+      print("", GB[x][y], end=" |")
+  print("\n+---+---+---+")
+   
+
+def modifyArray(num, turn):
+  num -= 1
+  if(num == 0):
+    GB[0][0] = turn
+  elif(num == 1):
+    GB[0][1] = turn
+  elif(num == 2):
+    GB[0][2] = turn
+  elif(num == 3):
+    GB[1][0] = turn
+  elif(num == 4):
+    GB[1][1] = turn
+  elif(num == 5):
+    GB[1][2] = turn
+  elif(num == 6):
+    GB[2][0] = turn 
+  elif(num == 7):
+    GB[2][1] = turn
+  elif(num == 8):
+    GB[2][2] = turn  
+
+def checkWin(GGB):
+  # X
+  if(GGB[0][0] == turn and GB [0][1] == turn and GB[0][2] == turn):
+    print("X is Victorious!!!")
+    return "X"
+  elif(GB[0][0] == turn2 and GB [0][1] == turn2 and GB[0][2] == turn2):
+    print("O is Victorious!!!")
+    return "O"
+  elif(GB[1][0] == turn and GB [1][1] == turn and GB[1][2] == turn):
+    print("X is Victorious!!!")
+    return "X"
+  elif(GB[1][0] == turn2 and GB [1][1] == turn2 and GB[1][2] == turn2):
+    print("O is Victorious!!!")
+    return "O"
+  elif(GB[2][0] == turn and GB [2][1] == turn and GB[2][2] == turn):
+    print("X is Victorious!!!")
+    return "x"
+  elif(GB[2][0] == turn2 and GGB [2][1] == turn2 and GB[2][2] == turn2):
+    print("O is Victorious!!!")
+    return "O"
+  
+  # Y
+  if(GB[0][0] == turn and GB[1][0] == turn and GB[2][0] == turn):
+    print("X has won your way better!")
+    return "X"
+  elif(GB[0][0] == turn2 and GB[1][0] == turn2 and GB[2][0] == turn2):
+    print("O has won, better luck next time!")
+    return "O"
+  elif(GB[0][1] == turn and GB[1][1] == turn and GB[2][1] == turn):
+    print("X has won, I'm better!")
+    return "X"
+  elif(GB[0][1] == turn2 and GB[1][1] == turn2 and GB[2][1] == turn2):
+    print("O has won!")
+    return "O"
+  elif(GB[0][2] == turn and GB[1][2] == turn and GB[2][2] == turn):
+    print("X has won!")
+    return "X"
+  elif(GB[0][2] == turn2 and GB[1][2] == turn2 and GB[2][2] == turn2):
+    print("O has won!")
+    return "O"
+  
+  
+  # Criss Cross
+  elif(GB[0][0] == turn and GB[1][1] == turn and GB[2][2] == turn):
+    print("X has won!")
+    return "X"
+  elif(GB[0][0] == turn2 and GB[1][1] == turn2 and GB[2][2] == turn2):
+    print("O has won!")  
+    return "O"
+  elif(GB[0][2] == turn and GB[1][1] == turn and GB[2][0] == turn):
+    print("X has won!")  
+    return "X"
+  elif(GB[0][2] == turn2 and GB[1][1] == turn2 and GB[2][0] == turn2):
+    print("O has won!") 
+    return "O" 
+  else:
+    return "N"
+  
+
+leaveLoop = False 
+turn = 'X'
+turn2 = 'O'
+turnC = 0
+
+while(leaveLoop == False):
+  #Where you make your first move
+  if(turnC % 2 == 0):
+    printGB()
+    numberP = int(input("\nIt's your move, enter #[1-9]:"))
+    if(numberP >= 1 or numberP <= 9):
+      modifyArray(numberP, turn)
+      TacGrid.remove(numberP)
+    
+    #Won't let user pick an invalid selection
+    else:
+      print("You not breakin my game today, try again.>:(")
+    turnC +=1 
+
+  #Where the AI overlords make their move 
+  else:
+    while(True):
+      Overlord = random.choice(TacGrid) #I just put Overlord as the computers turn
+      print("\nOverlords move: ", Overlord)
+      if(Overlord in TacGrid):
+          modifyArray(Overlord, 'O')
+          TacGrid.remove(Overlord)
+          turnC += 1
+          break
+   
+  winner = checkWin(GB)
+
+  if(winner != "N"):
+    print("\nGame over! Thank you for playing :)")
+    break
